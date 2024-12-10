@@ -31,15 +31,15 @@ func GetCellsAndSum(p Program) ([]Cell, int) {
 	var wg sync.WaitGroup
 
 	for x := range 30 {
-		for y := range 30 {
-			for z := range 30 {
-				wg.Add(1)
-				go func() {
-					defer wg.Done()
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for y := range 30 {
+				for z := range 30 {
 					values <- Cell{x, y, z, StackMachine(p, x, y, z)}
-				}()
+				}
 			}
-		}
+		}()
 	}
 
 	go func() {
