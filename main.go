@@ -70,6 +70,7 @@ func CountClouds(cells []Cell) int {
 
 	for len(availableCells) > 0 {
 		currentCloud.Push(availableCells[0])
+		grid[availableCells[0].X][availableCells[0].Y][availableCells[0].Z] = 0
 		availableCells = removeCell(availableCells, 0)
 
 		// Find all connected cells
@@ -83,10 +84,9 @@ func CountClouds(cells []Cell) int {
 
 					if coords[dimension] >= 0 && coords[dimension] < GridSize && grid[coords[0]][coords[1]][coords[2]] > 0 {
 						i := slices.IndexFunc(availableCells, func(c Cell) bool { return c.Cmp(coords) })
-						if i >= 0 {
-							currentCloud.Push(availableCells[i])
-							availableCells = removeCell(availableCells, i)
-						}
+						currentCloud.Push(availableCells[i])
+						grid[coords[0]][coords[1]][coords[2]] = 0
+						availableCells = removeCell(availableCells, i)
 					}
 				}
 			}

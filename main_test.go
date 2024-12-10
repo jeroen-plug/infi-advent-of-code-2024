@@ -58,3 +58,10 @@ func BenchmarkGetCellsAndSum(b *testing.B) {
 		GetCellsAndSum(p)
 	}
 }
+
+func BenchmarkCountClouds(b *testing.B) {
+	cells, _ := GetCellsAndSum(Parse(GetLines()))
+	for range b.N {
+		CountClouds(cells)
+	}
+}
